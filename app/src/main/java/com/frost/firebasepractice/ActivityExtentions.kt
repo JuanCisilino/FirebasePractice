@@ -14,15 +14,15 @@ fun Activity.logEventAnalytics(message: String, name:String){
     analytics.logEvent(name, bundle)
 }
 
-fun Activity.createUser(email: String, pass: String)=
+fun createUser(email: String, pass: String)=
     FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, pass)
 
-fun Activity.signIn(email: String, pass: String)=
+fun signIn(email: String, pass: String)=
     FirebaseAuth.getInstance().signInWithEmailAndPassword(email, pass)
 
-fun Activity.logOut()= FirebaseAuth.getInstance().signOut()
+fun logOut()= FirebaseAuth.getInstance().signOut()
 
-fun Activity.signInWithCredential(credential: AuthCredential) =
+fun signInWithCredential(credential: AuthCredential) =
     FirebaseAuth.getInstance().signInWithCredential(credential)
 
 fun Activity.showAlert(){

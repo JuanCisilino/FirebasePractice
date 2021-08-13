@@ -1,4 +1,6 @@
 <resources>
     <string name="app_name">Firebase</string>
     <string name="prefs_file">com.frost.firebasepractice.PREFERENCE_FILE_KEY</string>
+    <string name="facebook_app_id">222184763185718</string>
+    <string name="fb_login_protocol_scheme">fb222184763185718</string>
 </resources>

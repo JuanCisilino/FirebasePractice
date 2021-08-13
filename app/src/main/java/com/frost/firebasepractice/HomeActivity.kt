@@ -4,9 +4,10 @@ import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.facebook.login.LoginManager
 import kotlinx.android.synthetic.main.activity_home.*
 
-enum class ProviderType { Basic, Google }
+enum class ProviderType { Basic, Google, Facebook }
 
 class HomeActivity : AppCompatActivity(R.layout.activity_home) {
 
@@ -51,6 +52,7 @@ class HomeActivity : AppCompatActivity(R.layout.activity_home) {
         emailText.text = email
         passText.text = provider
         logOutButton.setOnClickListener {
+            if (provider == ProviderType.Facebook.name) LoginManager.getInstance().logOut()
             logOut()
             clearData()
             logEventAnalytics("Cierre de sesion", "LogOut")

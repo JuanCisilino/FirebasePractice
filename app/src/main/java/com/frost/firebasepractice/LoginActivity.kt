@@ -4,17 +4,24 @@ import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.facebook.CallbackManager
+import com.facebook.FacebookCallback
+import com.facebook.FacebookException
+import com.facebook.login.LoginManager
+import com.facebook.login.LoginResult
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthResult
+import com.google.firebase.auth.FacebookAuthProvider
 import com.google.firebase.auth.GoogleAuthProvider
 import kotlinx.android.synthetic.main.activity_login.*
 
 class LoginActivity : AppCompatActivity(R.layout.activity_login) {
 
     private val GOOGLE_SIGN_IN = 100
+    private val callbackManager = CallbackManager.Factory.create()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -63,9 +70,32 @@ class LoginActivity : AppCompatActivity(R.layout.activity_login) {
             googleClient.signOut()
             startActivityForResult(googleClient.signInIntent, GOOGLE_SIGN_IN)
         }
+        fbButton.setOnClickListener {
+            LoginManager.getInstance().logInWithReadPermissions(this, listOf("email"))
+            LoginManager.getInstance().registerCallback(callbackManager,
+            object : FacebookCallback<LoginResult>{
+                override fun onSuccess(result: LoginResult?) {
+                    result?.let {
+                        signInWithCredential(FacebookAuthProvider.getCredential(it.accessToken.token))
+                            .addOnCompleteListener {
+                                if (it.isSuccessful){
+                                    HomeActivity.start(this@LoginActivity, it.result.user?.email?:"", ProviderType.Facebook.name)
+                                }else {
+                                    showAlert()
+                                }
+                            }
+                    }
+                }
+
+                override fun onCancel() {}
+
+                override fun onError(error: FacebookException?) { showAlert() }
+            })
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        callbackManager.onActivityResult(requestCode, resultCode, data)
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == GOOGLE_SIGN_IN){
             val task = GoogleSignIn.getSignedInAccountFromIntent(data)
