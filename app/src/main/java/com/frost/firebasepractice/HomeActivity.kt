@@ -6,7 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import kotlinx.android.synthetic.main.activity_home.*
 
-enum class ProviderType { Basic }
+enum class ProviderType { Basic, Google }
 
 class HomeActivity : AppCompatActivity(R.layout.activity_home) {
 
@@ -27,9 +27,23 @@ class HomeActivity : AppCompatActivity(R.layout.activity_home) {
         super.onCreate(savedInstanceState)
         logEventAnalytics("Inicio pantalla Home", "InitHome")
         val bundle = intent.extras
-        val email = bundle?.getString(emailKey)
-        val provider = bundle?.getString(providerKey)
-        setup(email?:"", provider?:"")
+        val email = bundle?.getString(emailKey)?:""
+        val provider = bundle?.getString(providerKey)?:""
+        setup(email, provider)
+        saveData(email, provider)
+    }
+
+    private fun saveData(email: String, provider: String) {
+        val prefs = getSharedPreferences(getString(R.string.prefs_file), Context.MODE_PRIVATE).edit()
+        prefs.putString("email", email)
+        prefs.putString("provider", provider)
+        prefs.apply()
+    }
+
+    private fun clearData(){
+        val prefs = getSharedPreferences(getString(R.string.prefs_file), Context.MODE_PRIVATE).edit()
+        prefs.clear()
+        prefs.apply()
     }
 
     private fun setup(email: String, provider: String) {
@@ -38,6 +52,7 @@ class HomeActivity : AppCompatActivity(R.layout.activity_home) {
         passText.text = provider
         logOutButton.setOnClickListener {
             logOut()
+            clearData()
             logEventAnalytics("Cierre de sesion", "LogOut")
             onBackPressed()
         }

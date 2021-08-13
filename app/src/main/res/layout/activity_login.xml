@@ -66,4 +66,20 @@
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="5dp"/>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/googleButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:background="@color/Background"
+        android:drawableStart="@drawable/fui_ic_googleg_color_24dp"
+        android:paddingLeft="16dp"
+        android:text="Google"
+        android:textAlignment="textStart"
+        android:textColor="@color/colorAccent" />
+
 </androidx.appcompat.widget.LinearLayoutCompat>

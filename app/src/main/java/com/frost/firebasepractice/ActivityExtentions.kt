@@ -4,6 +4,7 @@ import android.app.Activity
 import android.app.AlertDialog
 import android.os.Bundle
 import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.firebase.auth.AuthCredential
 import com.google.firebase.auth.FirebaseAuth
 
 fun Activity.logEventAnalytics(message: String, name:String){
@@ -21,11 +22,14 @@ fun Activity.signIn(email: String, pass: String)=
 
 fun Activity.logOut()= FirebaseAuth.getInstance().signOut()
 
-fun Activity.showAlert(title: String, message: String, positiveButton: String){
+fun Activity.signInWithCredential(credential: AuthCredential) =
+    FirebaseAuth.getInstance().signInWithCredential(credential)
+
+fun Activity.showAlert(){
     val builder = AlertDialog.Builder(this)
-    builder.setTitle(title)
-    builder.setMessage(message)
-    builder.setPositiveButton(positiveButton, null)
+    builder.setTitle("Error")
+    builder.setMessage("Se ha producido un error autenticando al usuario")
+    builder.setPositiveButton("Aceptar", null)
     val dialog = builder.create()
     dialog.show()
 }
