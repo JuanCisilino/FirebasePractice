@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
 import com.facebook.CallbackManager
 import com.facebook.FacebookCallback
 import com.facebook.FacebookException
@@ -16,6 +17,7 @@ import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FacebookAuthProvider
 import com.google.firebase.auth.GoogleAuthProvider
+import com.google.firebase.messaging.FirebaseMessaging
 import kotlinx.android.synthetic.main.activity_login.*
 
 class LoginActivity : AppCompatActivity(R.layout.activity_login) {
@@ -28,6 +30,12 @@ class LoginActivity : AppCompatActivity(R.layout.activity_login) {
         logEventAnalytics("Inicio pantalla Login", "InitLogin")
         setup()
         session()
+        notification()
+    }
+
+    private fun notification() {
+        FirebaseMessaging.getInstance().subscribeToTopic("Usuarios")
+        intent.getStringExtra("url")?.let { Toast.makeText(this, it, Toast.LENGTH_LONG).show() }
     }
 
     private fun session() {
@@ -86,9 +94,7 @@ class LoginActivity : AppCompatActivity(R.layout.activity_login) {
                             }
                     }
                 }
-
                 override fun onCancel() {}
-
                 override fun onError(error: FacebookException?) { showAlert() }
             })
         }

@@ -52,4 +52,7 @@ dependencies {
     implementation 'com.google.android.gms:play-services-auth:19.2.0'
     //Facebook
     implementation 'com.facebook.android:facebook-android-sdk:4.42.0'
+    //Notifications
+    implementation 'com.google.firebase:firebase-messaging-ktx'
+
 }
