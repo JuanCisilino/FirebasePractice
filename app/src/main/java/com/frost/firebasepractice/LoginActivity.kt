@@ -31,7 +31,7 @@ class LoginActivity : AppCompatActivity(R.layout.activity_login) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        logEventAnalytics("Inicio pantalla Login", "InitLogin")
+        logEventAnalytics(getString(R.string.analytics_log_in), "InitLogin")
         setup()
         session()
         notification()
@@ -71,7 +71,7 @@ class LoginActivity : AppCompatActivity(R.layout.activity_login) {
     }
 
     private fun setup() {
-        title = "Authentication"
+        title = getString(R.string.title_login)
         signUpButton.setOnClickListener {
             if (emailEditText.text.isNotEmpty() && passEditText.text.isNotEmpty()){
                 createUser(emailEditText.text.toString(), passEditText.text.toString())

@@ -28,12 +28,16 @@ class HomeActivity : AppCompatActivity(R.layout.activity_home) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        logEventAnalytics("Inicio pantalla Home", "InitHome")
+        logEventAnalytics(getString(R.string.analytics_log_home), "InitHome")
         val bundle = intent.extras
         val email = bundle?.getString(emailKey)?:""
         val provider = bundle?.getString(providerKey)?:""
         setup(email, provider)
         saveData(email, provider)
+        remoteConfig()
+    }
+
+    private fun remoteConfig(){
         Firebase.remoteConfig.fetchAndActivate().addOnCompleteListener { task ->
             if (task.isSuccessful){
                 val showLogOut = Firebase.remoteConfig.getBoolean("showLogOut")
@@ -56,14 +60,14 @@ class HomeActivity : AppCompatActivity(R.layout.activity_home) {
     }
 
     private fun setup(email: String, provider: String) {
-        title = "Inicio"
+        title = getString(R.string.title_home)
         emailText.text = email
         passText.text = provider
         logOutButton.setOnClickListener {
             if (provider == ProviderType.Facebook.name) LoginManager.getInstance().logOut()
             logOut()
             clearData()
-            logEventAnalytics("Cierre de sesion", "LogOut")
+            logEventAnalytics(getString(R.string.analytics_log_out), "LogOut")
             onBackPressed()
         }
     }

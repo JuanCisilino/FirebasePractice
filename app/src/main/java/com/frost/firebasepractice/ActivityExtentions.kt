@@ -15,23 +15,23 @@ fun Activity.logEventAnalytics(message: String, name:String){
     analytics.logEvent(name, bundle)
 }
 
-fun createUser(email: String, pass: String)=
+fun Activity.createUser(email: String, pass: String)=
     FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, pass)
 
-fun signIn(email: String, pass: String)=
+fun Activity.signIn(email: String, pass: String)=
     FirebaseAuth.getInstance().signInWithEmailAndPassword(email, pass)
 
-fun logOut()= FirebaseAuth.getInstance().signOut()
+fun Activity.logOut()= FirebaseAuth.getInstance().signOut()
 
-fun signInWithCredential(credential: AuthCredential) =
+fun Activity.signInWithCredential(credential: AuthCredential) =
     FirebaseAuth.getInstance().signInWithCredential(credential)
 
 fun Activity.showAlert(){
     FirebaseCrashlytics.getInstance().log("ShowAlert()")
     val builder = AlertDialog.Builder(this)
-    builder.setTitle("Error")
-    builder.setMessage("Se ha producido un error autenticando al usuario")
-    builder.setPositiveButton("Aceptar", null)
+    builder.setTitle(getString(R.string.error))
+    builder.setMessage(getString(R.string.error_message))
+    builder.setPositiveButton(getString(R.string.ok), null)
     val dialog = builder.create()
     dialog.show()
 }

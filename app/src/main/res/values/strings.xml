@@ -3,4 +3,16 @@
     <string name="prefs_file">com.frost.firebasepractice.PREFERENCE_FILE_KEY</string>
     <string name="facebook_app_id">222184763185718</string>
     <string name="fb_login_protocol_scheme">fb222184763185718</string>
+
+    <string name="analytics_log_home">Inicio pantalla Home</string>
+    <string name="analytics_log_out">Cierre de sesion</string>
+    <string name="analytics_log_in">Inicio de sesion</string>
+
+    <string name="error_message">Se ha producido un error autenticando al usuario</string>
+    <string name="error">Error</string>
+    <string name="ok">Aceptar</string>
+
+    <string name="title_home">Inicio</string>
+    <string name="title_login">Authentication</string>
+
 </resources>
