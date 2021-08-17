@@ -5,4 +5,6 @@ by Email, Google, Facebook
 
 Cloud Messaging: Reciving messages on main Thread or Background. Segmentation by topic.
 
-Remote Config, CrashLytics, Analytics and 
+Analytics and CrashLytics
+
+Remote Config

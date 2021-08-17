@@ -5,6 +5,8 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.facebook.login.LoginManager
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.remoteconfig.ktx.remoteConfig
 import kotlinx.android.synthetic.main.activity_home.*
 
 enum class ProviderType { Basic, Google, Facebook }
@@ -32,6 +34,12 @@ class HomeActivity : AppCompatActivity(R.layout.activity_home) {
         val provider = bundle?.getString(providerKey)?:""
         setup(email, provider)
         saveData(email, provider)
+        Firebase.remoteConfig.fetchAndActivate().addOnCompleteListener { task ->
+            if (task.isSuccessful){
+                val showLogOut = Firebase.remoteConfig.getBoolean("showLogOut")
+                if (showLogOut) logOutButton.text = "Log Out"
+            }
+        }
     }
 
     private fun saveData(email: String, provider: String) {

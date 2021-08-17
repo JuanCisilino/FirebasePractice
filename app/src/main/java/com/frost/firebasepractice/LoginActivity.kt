@@ -17,7 +17,11 @@ import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FacebookAuthProvider
 import com.google.firebase.auth.GoogleAuthProvider
+import com.google.firebase.ktx.Firebase
 import com.google.firebase.messaging.FirebaseMessaging
+import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings
+import com.google.firebase.remoteconfig.ktx.remoteConfig
+import com.google.firebase.remoteconfig.ktx.remoteConfigSettings
 import kotlinx.android.synthetic.main.activity_login.*
 
 class LoginActivity : AppCompatActivity(R.layout.activity_login) {
@@ -31,6 +35,17 @@ class LoginActivity : AppCompatActivity(R.layout.activity_login) {
         setup()
         session()
         notification()
+        remoteConfig()
+    }
+
+    private fun remoteConfig() {
+        val configSettings: FirebaseRemoteConfigSettings = remoteConfigSettings {
+            minimumFetchIntervalInSeconds = 60
+        }
+        val firebaseConfig = Firebase.remoteConfig
+        firebaseConfig.setConfigSettingsAsync(configSettings)
+        //Se setea por si no hay inet a la hora de iniciar
+        firebaseConfig.setDefaultsAsync(mapOf("showLogOut" to false))
     }
 
     private fun notification() {
