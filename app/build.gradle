@@ -2,6 +2,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'com.google.gms.google-services'
+apply plugin: 'com.google.firebase.crashlytics'
 
 android {
     compileSdkVersion 29
@@ -54,5 +55,7 @@ dependencies {
     implementation 'com.facebook.android:facebook-android-sdk:4.42.0'
     //Notifications
     implementation 'com.google.firebase:firebase-messaging-ktx'
+    //Crashlytics
+    implementation 'com.google.firebase:firebase-crashlytics-ktx'
 
 }

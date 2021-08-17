@@ -6,6 +6,7 @@ import android.os.Bundle
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.auth.AuthCredential
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 
 fun Activity.logEventAnalytics(message: String, name:String){
     val analytics = FirebaseAnalytics.getInstance(this)
@@ -26,6 +27,7 @@ fun signInWithCredential(credential: AuthCredential) =
     FirebaseAuth.getInstance().signInWithCredential(credential)
 
 fun Activity.showAlert(){
+    FirebaseCrashlytics.getInstance().log("ShowAlert()")
     val builder = AlertDialog.Builder(this)
     builder.setTitle("Error")
     builder.setMessage("Se ha producido un error autenticando al usuario")
