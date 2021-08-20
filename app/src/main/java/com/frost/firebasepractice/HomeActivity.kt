@@ -5,6 +5,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.facebook.login.LoginManager
+import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.remoteconfig.ktx.remoteConfig
 import kotlinx.android.synthetic.main.activity_home.*
@@ -12,6 +13,8 @@ import kotlinx.android.synthetic.main.activity_home.*
 enum class ProviderType { Basic, Google, Facebook }
 
 class HomeActivity : AppCompatActivity(R.layout.activity_home) {
+
+    private val db = FirebaseFirestore.getInstance()
 
     companion object {
         const val emailKey = "emailKey"
@@ -70,5 +73,18 @@ class HomeActivity : AppCompatActivity(R.layout.activity_home) {
             logEventAnalytics(getString(R.string.analytics_log_out), "LogOut")
             onBackPressed()
         }
+        saveButton.setOnClickListener {
+            db.collection("users").document(email).set(
+                hashMapOf("provider" to provider,
+                    "address" to addressText.text.toString(),
+                    "phone" to phoneText.text.toString()))
+        }
+        getButton.setOnClickListener {
+            db.collection("users").document(email).get().addOnSuccessListener {
+                addressText.setText(it.get("address") as String?)
+                phoneText.setText(it.get("phone") as String?)
+            }
+        }
+        deleteButton.setOnClickListener { db.collection("users").document(email).delete() }
     }
 }
