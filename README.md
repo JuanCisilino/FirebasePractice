@@ -8,3 +8,5 @@ Cloud Messaging: Reciving messages on main Thread or Background. Segmentation by
 Analytics and CrashLytics
 
 Remote Config
+
+Firestore implemented
